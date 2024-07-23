@@ -1,10 +1,19 @@
 import random
 import os
 import keyboard
+from keyboard import KEY_DOWN, KEY_UP, KeyboardEvent
 import colors
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
+
+class Keys:
+    KEY_ARROW_UP = 72
+    KEY_ARROW_DOWN = 80
+    KEY_ARROW_LEFT = 75
+    KEY_ARROW_RIGHT = 77
+    KEY_SPACE = 57
+    KEY_SHIFT = 42
 
 class Difficulty:
     def __init__(self, rows: int, cols: int, mines: int):
@@ -217,28 +226,29 @@ def play_game(difficulty: Difficulty):
 
     while True:
         print(grid.selected_tile.x, grid.selected_tile.y)
-        keyboard.read_key()
-        
-        if keyboard.is_pressed("vänsterpil"):
+
+        keyboard.read_event()
+
+        if keyboard.is_pressed(Keys.KEY_ARROW_LEFT):
             if (grid.selected_tile.x - 1 != -1):
                 grid.select(grid.selected_tile.x - 1, grid.selected_tile.y)
                        
-        if keyboard.is_pressed("högerpil"):
+        if keyboard.is_pressed(Keys.KEY_ARROW_RIGHT):
             if (grid.selected_tile.x + 1 != difficulty.cols):
                 grid.select(grid.selected_tile.x + 1, grid.selected_tile.y)
                       
-        if keyboard.is_pressed('uppil'):
+        if keyboard.is_pressed(Keys.KEY_ARROW_UP):
             if (grid.selected_tile.y - 1 != -1):
                 grid.select(grid.selected_tile.x, grid.selected_tile.y - 1)
                       
-        if keyboard.is_pressed('nedpil'):
+        if keyboard.is_pressed(Keys.KEY_ARROW_DOWN):
             if (grid.selected_tile.y + 1 != difficulty.rows):
                 grid.select(grid.selected_tile.x, grid.selected_tile.y + 1)
                       
-        if keyboard.is_pressed('space'):
+        if keyboard.is_pressed(Keys.KEY_SPACE):
             grid.reveal()
             
-        if keyboard.is_pressed('skift'):
+        if keyboard.is_pressed(Keys.KEY_SHIFT):
             grid.mark()
 
         if grid.activated_mine:
