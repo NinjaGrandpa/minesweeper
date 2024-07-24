@@ -1,10 +1,7 @@
 import random
-import os
 import keyboard
 import colors
-
-def clear():
-    os.system('cls' if os.name == 'nt' else 'clear')
+from utils import clear, exit_prompt, clean_input as input
 
 class Keys:
     KEY_ARROW_UP = 72
@@ -111,7 +108,7 @@ class Grid:
         return tile
 
     def draw_grid(self):
-        # print(f"Current Difficulty {self.row_count}x{self.col_count}, {self.mine_count} mines.\n")
+        print(f"Current Difficulty {self.row_count}x{self.col_count}, {self.mine_count} mines.\n")
         print(f"x ", end = "")
         for i in range(self.col_count):
             print(f" {i} ", end = "")
@@ -212,7 +209,7 @@ def menu():
                 return DIFF_HARD
 
             case "quit" | "q":
-                if input("Do you want to quit the game? Y/N").lower().strip() == "y":
+                if exit_prompt("Do you want to quit the game?"):
                     exit()
 
             case "debug":
@@ -225,17 +222,17 @@ def menu():
                     choices = [int(i) for i in diff_choice.split()]
 
                     if (len(choices) <= 3):
-                        difficulty.rows = choices[0] if choices[0] is not None else int(input("Amount of Rows (max 30): "))
-                        difficulty.cols = choices[1] if len(choices) > 1 is not None else int(input("Amount of Columns (max 30): "))
-                        difficulty.mines = choices[2] if len(choices) > 2 is not None else int(input("Amount of Mines (max 240): "))
+                        rows = choices[0] if choices[0] is not None else int(input("Amount of Rows (max 30): "))
+                        cols = choices[1] if len(choices) > 1 is not None else int(input("Amount of Columns (max 30): "))
+                        mines = choices[2] if len(choices) > 2 is not None else int(input("Amount of Mines (max 240): "))
 
-                        return difficulty
+                        return Difficulty(rows, cols, mines)
 
                 else:
                     print("Choose a difficulty or create a custom difficulty by entering the amount of rows, columns and mines.")
             
 def play_game(difficulty: Difficulty):
-    
+
     grid = Grid(difficulty)
     
     while True:
@@ -246,22 +243,18 @@ def play_game(difficulty: Difficulty):
         print(f"Tiles: {grid.tile_count - grid.mine_count - grid.get_cleared_tiles()}")
 
         if grid.activated_mine:
+            clear()
             grid.draw_grid()
-            play_again = input("\nDo you want to play again? Y/N: ").lower().strip()
-            if play_again == "y" or "yes":
+            if exit_prompt("Do you want to play again?"):
                 play_game(difficulty)
-            else: 
-                break
+            else: break
 
         if grid.tile_count - grid.mine_count == grid.get_cleared_tiles():
-            clear()
             print("You won the game!")
-            play_again = input("Do you want to play again? Y/N:").lower().strip()
 
-            if play_again in ["y", "yes"]:
+            if exit_prompt("Do you want to play again?"):
                 play_game(difficulty)
-            else: 
-                break
+            else: break
        
         if debug:
             for col in grid.grid:
@@ -294,8 +287,7 @@ def play_game(difficulty: Difficulty):
             grid.mark()
 
         elif keyboard.is_pressed("q"):
-            i = input("Do you want to exit to the menu? Y/N: ").lower().strip()
-            if i in ("y", "yes"):
+            if exit_prompt("Do you want to exit to the menu?"):
                 break                       
 
 
