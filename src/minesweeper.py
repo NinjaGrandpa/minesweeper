@@ -1,7 +1,35 @@
+from time import sleep
 import keyboard
 from utils import clear, exit_prompt, Keys
 from grid import Grid, Difficulty
 from menu import menu, Options
+
+
+class Minesweeper:
+    def __init__(self, grid: Grid, options: Options):
+        self.grid = grid
+        self.options = options
+
+    def move_left(self):
+        if self.grid.selected_tile.x - 1 != -1:
+            self.grid.select(self.grid.selected_tile.x -
+                             1, self.grid.selected_tile.y)
+
+    def move_right(self):
+        if self.grid.selected_tile.x + 1 != difficulty.cols:
+            self.grid.select(self.grid.selected_tile.x +
+                             1, self.grid.selected_tile.y)
+
+    def move_up(self):
+        if self.grid.selected_tile.y - 1 != -1:
+            self.grid.select(self.grid.selected_tile.x,
+                             self.grid.selected_tile.y - 1)
+
+    def move_down(self):
+        if self.grid.selected_tile.y + 1 != difficulty.rows:
+            self.grid.select(self.grid.selected_tile.x,
+                             self.grid.selected_tile.y + 1)
+
 
 options = Options().get()
 
@@ -70,4 +98,5 @@ def play_game(difficulty: Difficulty):
 
 while True:
     difficulty = menu()
+    sleep(2)
     play_game(difficulty)
