@@ -98,5 +98,4 @@ def play_game(difficulty: Difficulty):
 
 while True:
     difficulty = menu()
-    sleep(2)
     play_game(difficulty)

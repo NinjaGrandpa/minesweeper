@@ -17,7 +17,7 @@ class Choice:
         return self.text
 
     def select(self):
-        self.on_select()
+        return self.on_select()
 
 
 class Menu:
@@ -47,6 +47,9 @@ class Menu:
             self.selected_choice = 0
         clear()
         print(self.__str__())
+
+    def select_choice(self, *args):
+        return self.choices[self.selected_choice].select()
 
 
 class Options:
@@ -90,7 +93,7 @@ def option_menu():
         print(f"- First Run(f): {options.first_run}")
         print(f"- Input Type(i): {options.input_type}")
         print("---------------")
-        print("Write the option and the value: 'input keyboard'")
+        print("Write the option and the value: 'input keyboard'\nPress 'q' to exit to menu")
 
         usr_input = input("Input: ").split()
 
@@ -107,7 +110,10 @@ def option_menu():
             else:
                 print(f"Value: {value} not recognized")
 
-        if option in ["debug", "d"] and check_val():
+        if option in ["q", "quit"]:
+            if exit_prompt("Do you want to exit to the menu?"):
+                break
+        elif option in ["debug", "d"] and check_val():
             options.debug = is_bool(value) if value else not options.debug
 
         elif option in ["first", "firstrun", "first_run", "firstRun", "f"] and check_val():
@@ -143,13 +149,6 @@ Choose the difficulty by entering one of the options below or by selecting an op
 You can also customize your own difficulty by entering the amount of rows, columns and mines.
 An alternative to this is to write custom(c) and enter in manually.
 """
-
-# "- Easy(e): 9x9 grid, 10 mines"
-# "- Medium(m): 16x30 grid, 40 mines"
-# "- Hard(h): 24x30 grid, 160 mines"
-# "- Custom(rows columns mines): Min 9x9 grid, 10 mines and Max 30x30 grid, 240 mines"
-# "- Options(o): Access the options"
-# "- Quit(q): Quit the game"
 
     def on_easy_select():
         print("Playing with Easy difficulty")
@@ -210,7 +209,6 @@ An alternative to this is to write custom(c) and enter in manually.
 
     keyboard.on_press_key(Keys.KEY_ARROW_UP, main_menu.select_prev)
     keyboard.on_press_key(Keys.KEY_ARROW_DOWN, main_menu.select_next)
-    # keyboard.on_press_key('enter', minput)
 
     while True:
         clear()
@@ -227,16 +225,20 @@ An alternative to this is to write custom(c) and enter in manually.
         # )[0]
 
         if menu_input == "":
-            pass
+            result = main_menu.select_choice()
+            if result != None:
+                return result
+            else:
+                continue
 
         for choice in main_menu.choices:
             for key in choice.keys:
                 if menu_input == key:
-                    choice.select()
-                    break
-
-        print("Press Enter to continue")
-        keyboard.wait("enter")
+                    result = choice.select()
+                    if result != None:
+                        return result
+                    else:
+                        continue
 
         # match menu_input.lower().strip():
         #     case "easy" | "e":

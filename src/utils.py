@@ -37,3 +37,4 @@ class Keys:
     KEY_ARROW_RIGHT = 77
     KEY_SPACE = 57
     KEY_SHIFT = 42
+    KEY_ENTER = 28
