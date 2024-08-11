@@ -1,6 +1,4 @@
 import json
-import msvcrt
-from time import sleep
 import keyboard
 import colors
 from utils import Keys, clear, is_bool, clean_input as input, exit_prompt
