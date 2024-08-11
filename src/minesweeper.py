@@ -42,8 +42,8 @@ def play_game(difficulty: Difficulty):
         clear()
         grid.draw_grid()
         print(grid.selected_tile.x, grid.selected_tile.y)
-        print(f"Tiles: {grid.tile_count -
-              grid.mine_count - grid.get_cleared_tiles()}")
+        tiles_left = grid.tile_count - grid.mine_count - grid.get_cleared_tiles()
+        print(f"Tiles: {tiles_left}")
 
         if grid.activated_mine:
             clear()
