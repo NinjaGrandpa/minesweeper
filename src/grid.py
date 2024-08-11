@@ -115,10 +115,8 @@ class Grid:
         return tile
 
     def draw_grid(self):
-        print(
-            f"Current Difficulty {self.row_count}x{
-                self.col_count}, {self.mine_count} mines.\n"
-        )
+        print(f"""Current Difficulty {self.row_count}x{
+              self.col_count}, {self.mine_count} mines.\n""")
         print(f"x ", end="")
         for i in range(self.col_count):
             print(f" {i} ", end="")
