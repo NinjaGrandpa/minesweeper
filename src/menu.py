@@ -213,16 +213,7 @@ An alternative to this is to write custom(c) and enter in manually.
     while True:
         clear()
         print(main_menu)
-
-        keyboard.start_recording()
         menu_input = input(": ").lower().strip()
-        events = keyboard.stop_recording()
-        # menu_input = list(
-        #     filter(
-        #         lambda x: x != "",
-        #         keyboard.get_typed_strings(events)
-        #     )
-        # )[0]
 
         if menu_input == "":
             result = main_menu.select_choice()
@@ -239,54 +230,3 @@ An alternative to this is to write custom(c) and enter in manually.
                         return result
                     else:
                         continue
-
-        # match menu_input.lower().strip():
-        #     case "easy" | "e":
-        #         print("Playing with Easy difficulty")
-        #         return DIFF_EASY
-
-        #     case "medium" | "mid" | "m":
-        #         print("Playing with Medium difficulty")
-        #         return DIFF_MEDIUM
-
-        #     case "hard" | "h":
-        #         print("Playing with Hard Difficulty")
-        #         return DIFF_HARD
-
-        #     case "quit" | "q":
-        #         if exit_prompt("Do you want to quit the game?"):
-        #             exit()
-
-        #     case "options" | "o":
-        #         option_menu()
-
-        #     case "cls" | "clear":
-        #         clear()
-
-        #     case _:
-        #         if menu_input.isdigit() or (menu_input in ["custom", "c"]):
-        #             menu_choices = [int(i) for i in menu_input.split()]
-
-        #             if len(menu_choices) <= 3:
-        #                 rows = (
-        #                     menu_choices[0]
-        #                     if menu_choices[0] is not None
-        #                     else int(input("Amount of Rows (max 30): "))
-        #                 )
-        #                 cols = (
-        #                     menu_choices[1]
-        #                     if len(menu_choices) > 1 is not None
-        #                     else int(input("Amount of Columns (max 30): "))
-        #                 )
-        #                 mines = (
-        #                     menu_choices[2]
-        #                     if len(menu_choices) > 2 is not None
-        #                     else int(input("Amount of Mines (max 240): "))
-        #                 )
-
-        #                 return Difficulty(rows, cols, mines)
-
-        #         else:
-        #             print(
-        #                 "Choose a difficulty or create a custom difficulty by entering the amount of rows, columns and mines."
-        #             )
