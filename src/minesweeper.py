@@ -5,8 +5,6 @@ from grid import Grid, Difficulty
 from menu import menu, Options
 
 
-# TODO #6 Implement function to exit to the menu when in game
-
 def first_run():
     options = Options()
     print(f"Welcome to Minesweeper!\nDo you want to play with a keyboard or only using text?\n- text(t)\n- keyboard(k)")
@@ -30,14 +28,6 @@ def play_game(difficulty: Difficulty):
     options = Options()
 
     grid = Grid(difficulty)
-
-    # if options.input_type == "keyboard":
-    #     keyboard.hook_key(Keys.KEY_ARROW_UP, lambda x: grid.move_up())
-    #     keyboard.hook_key(Keys.KEY_ARROW_DOWN, lambda x: grid.move_down())
-    #     keyboard.hook_key(Keys.KEY_ARROW_LEFT, lambda x: grid.move_left())
-    #     keyboard.hook_key(Keys.KEY_ARROW_RIGHT, lambda x: grid.move_right())
-    #     keyboard.hook_key(Keys.KEY_SPACE, lambda x: grid.reveal())
-    #     keyboard.hook_key(Keys.KEY_SHIFT, lambda x: grid.mark())
 
     while True:
 
