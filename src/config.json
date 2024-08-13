@@ -1,5 +1,5 @@
 {
     "debug": false,
-    "first_run": true,
+    "first_run": false,
     "input_type": "text"
 }

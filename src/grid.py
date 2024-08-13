@@ -75,7 +75,7 @@ class Grid:
         self.col_count = difficulty.cols
         self.tile_count = difficulty.rows * difficulty.cols
         self.mine_count = difficulty.mines
-        self.cleared_tiles = 0
+        self.sweeped_tiles = 0
         self.grid = self.__create_grid__()
         self.selected_tile = self.__init_select__()
         self.activated_mine = False
@@ -127,13 +127,40 @@ class Grid:
                 print("{}".format(col), end="")
             print("")
 
-    def select(self, x, y):
-        self.selected_tile.is_selected = False
-        self.selected_tile = self.grid[y][x]
-        self.selected_tile.is_selected = True
+    def move(self, x, y):
+        if (y <= self.row_count - 1 >= 0) and (x <= self.col_count - 1 >= 0):
+            self.selected_tile.is_selected = False
+            self.selected_tile = self.grid[y][x]
+            self.selected_tile.is_selected = True
+
+    def move_left(self, steps=1):
+        if self.selected_tile.x - steps + self.col_count - 1 < 0:
+            self.move(0, self.selected_tile.y)
+        else:
+            self.move(self.selected_tile.x - steps, self.selected_tile.y)
+
+    def move_right(self, steps=1):
+        if self.selected_tile.x + steps - self.col_count - 1 > 0:
+            self.move(self.col_count - 1, self.selected_tile.y)
+        else:
+            self.move(self.selected_tile.x + steps, self.selected_tile.y)
+
+    def move_up(self, steps=1):
+        if self.selected_tile.y - steps + self.row_count - 1 < 0:
+            self.move(self.selected_tile.x, 0)
+        else:
+            self.move(self.selected_tile.x, self.selected_tile.y - steps)
+
+    def move_down(self, steps=1):
+        if self.selected_tile.y + steps - self.row_count - 1 > 0:
+            self.move(self.selected_tile.x, self.row_count - 1)
+        else:
+            self.move(self.selected_tile.x, self.selected_tile.y + steps)
 
     def reveal(self):
-        if self.selected_tile.is_mine:
+        if self.selected_tile.is_marked:
+            return
+        elif self.selected_tile.is_mine:
             print("BANG!")
             self.activated_mine = True
             self.reveal_all()

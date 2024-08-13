@@ -84,7 +84,7 @@ def option_menu():
 
     while True:
         global options
-        options = Options().get()
+        options = Options()
 
         print("\n--- Options ---")
         print(f"- Debug(d): {options.debug}")
@@ -137,7 +137,6 @@ def option_menu():
 
 
 def menu():
-    options = Options()
 
     text = """
     xXx Welcome to Minesweeper! xXx
