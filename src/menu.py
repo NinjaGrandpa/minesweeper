@@ -137,7 +137,7 @@ def option_menu():
 
 
 def menu():
-
+    options = Options()
     text = """
     xXx Welcome to Minesweeper! xXx
 ---------------------------------------
@@ -204,8 +204,9 @@ An alternative to this is to write custom(c) and enter in manually.
 
     main_menu = Menu(text, choices)
 
-    keyboard.on_press_key(Keys.KEY_ARROW_UP, main_menu.select_prev)
-    keyboard.on_press_key(Keys.KEY_ARROW_DOWN, main_menu.select_next)
+    if options.input_type == "keyboard":
+        keyboard.on_press_key(Keys.KEY_ARROW_UP, main_menu.select_prev)
+        keyboard.on_press_key(Keys.KEY_ARROW_DOWN, main_menu.select_next)
 
     while True:
         clear()

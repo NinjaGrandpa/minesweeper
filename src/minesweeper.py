@@ -4,12 +4,30 @@ from utils import clear, exit_prompt, Keys
 from grid import Grid, Difficulty
 from menu import menu, Options
 
-options = Options()
 
 # TODO #6 Implement function to exit to the menu when in game
 
+def first_run():
+    options = Options()
+    print(f"Welcome to Minesweeper!\nDo you want to play with a keyboard or only using text?\n- text(t)\n- keyboard(k)")
+    while True:
+        match input(": ").lower().strip():
+            case "t" | "text":
+                options.input_type = "text"
+                break
+            case "k" | "keyboard":
+                options.input_type = "keyboard"
+                break
+            case _:
+                print("Please enter on of the options text(t) or keyboard(k).")
+    options.first_run = False
+    with open("src/config.json", "w") as file:
+        file.write(options.to_json())
+
 
 def play_game(difficulty: Difficulty):
+    keyboard.unhook_all()
+    options = Options()
 
     grid = Grid(difficulty)
 
@@ -113,11 +131,14 @@ def play_game(difficulty: Difficulty):
         elif keyboard.is_pressed(Keys.KEY_SHIFT) or arg == "m":
             grid.mark()
 
-        elif keyboard.is_pressed("q"):
+        elif keyboard.is_pressed("q") or arg == "q":
             if exit_prompt("Do you want to exit to the menu?"):
                 break
 
 
 while True:
+    options = Options()
+    if options.first_run == True:
+        first_run()
     difficulty = menu()
     play_game(difficulty)
