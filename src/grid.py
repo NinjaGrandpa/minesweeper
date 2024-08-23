@@ -117,12 +117,21 @@ class Grid:
     def draw_grid(self):
         print(f"""Current Difficulty {self.row_count}x{
               self.col_count}, {self.mine_count} mines.\n""")
-        print(f"x ", end="")
+        cross_text = f"x " + (" " if self.row_count >= 10 else "")
+        print(cross_text, end="")
         for i in range(self.col_count):
-            print(f" {i} ", end="")
+            text = f" {i} "
+            if i >= 10:
+                text = f" {i}"
+
+            print(text, end="")
         print("")
-        for row in self.grid:
-            print(f"{self.grid.index(row)} ", end="")
+        for i, row in enumerate(self.grid):
+            text = f"{i} "
+            if self.row_count >= 10 and i < 10:
+                text = f"{i}  "
+
+            print(text, end="")
             for col in row:
                 print("{}".format(col), end="")
             print("")
